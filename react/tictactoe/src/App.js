@@ -6,25 +6,24 @@ function Square({ value , onSquareClick}) {
     <button className="square" onClick={onSquareClick}>{value}</button>);
 }
 
-function MakeCell({ row, col, squares }) {
+function Cell({ row, col, squares, handleClick }) {
   const i = row * 3 + col;
   return (
     <Square value={squares[i]} onSquareClick={() => handleClick(i)} />
   );
 }
 
-function MakeRow({ row, squares }) {
-  console.log(row);
+function Row({ row, squares, handleClick }) {
   return (
     <div className="board-row">
-      { [0, 1, 2].map((col) => MakeCell(row, col, squares)) }
+      { [0, 1, 2].map((col) => <Cell key={row * 3 + col} row={row} col={col} squares={squares}  handleClick={handleClick}/>) }
     </div>
   );
 }
 
-function MakeBoard({ squares }) {
+function MakeBoard({ squares, handleClick }) {
   return (
-    [0, 1, 2].map((row) => MakeRow(row, squares))
+    [0, 1, 2].map((row) => <Row key={row} row={row} squares={squares}  handleClick={handleClick}/>)
   );
 }
 
@@ -51,12 +50,12 @@ function Board({ xIsNext, squares, onPlay }) {
     status = 'Next player: ' + (xIsNext ? 'X' : 'O');
   }
 
-  let board = MakeBoard(squares);
+  // const board = MakeBoard(squares);
 
   return (
     <>
       <div className="status">{status}</div>
-      {board}
+      <MakeBoard squares={squares} handleClick={handleClick}/>
       {/* <div className="board-row">
         <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
