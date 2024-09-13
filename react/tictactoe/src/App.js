@@ -14,6 +14,7 @@ function MakeCell({ row, col, squares }) {
 }
 
 function MakeRow({ row, squares }) {
+  console.log(row);
   return (
     <div className="board-row">
       { [0, 1, 2].map((col) => MakeCell(row, col, squares)) }
@@ -50,10 +51,12 @@ function Board({ xIsNext, squares, onPlay }) {
     status = 'Next player: ' + (xIsNext ? 'X' : 'O');
   }
 
+  let board = MakeBoard(squares);
+
   return (
     <>
       <div className="status">{status}</div>
-      {MakeBoard(squares)}
+      {board}
       {/* <div className="board-row">
         <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
